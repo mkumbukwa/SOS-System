@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Help System</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#0f172a;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+        }
+
+        .container{
+            width:400px;
+            background:#1e293b;
+            border-radius:20px;
+            overflow:hidden;
+            box-shadow:0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        .screen{
+            display:none;
+            padding:20px;
+            min-height:650px;
+        }
+
+        .screen.active{
+            display:block;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:25px;
+        }
+
+        /* HOME */
+        .home{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .sos-btn{
+            width:220px;
+            height:220px;
+            border:none;
+            border-radius:50%;
+            background:linear-gradient(135deg,#ff0000,#cc0000);
+            color:white;
+            font-size:55px;
+            font-weight:bold;
+            cursor:pointer;
+            box-shadow:0 0 50px rgba(255,0,0,0.8);
+            transition:0.3s;
+        }
+
+        .sos-btn:hover{
+            transform:scale(1.05);
+        }
+
+        .subtitle{
+            margin-top:25px;
+            font-size:18px;
+            text-align:center;
+            color:#cbd5e1;
+        }
+
+        /* CONTACTS */
+        .contact{
+            background:#334155;
+            padding:18px;
+            margin-bottom:15px;
+            border-radius:15px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .call-btn{
+            background:#22c55e;
+            color:white;
+            border:none;
+            padding:10px 18px;
+            border-radius:10px;
+            cursor:pointer;
+        }
+
+        .add-btn{
+            width:100%;
+            padding:15px;
+            background:#3b82f6;
+            color:white;
+            border:none;
+            border-radius:12px;
+            cursor:pointer;
+            font-size:16px;
+            margin-top:20px;
+        }
+
+        /* MAP */
+        .map-box{
+            width:100%;
+            height:500px;
+            border-radius:20px;
+            overflow:hidden;
+        }
+
+        iframe{
+            width:100%;
+            height:100%;
+            border:none;
+        }
+
+        /* NAVIGATION */
+        .nav{
+            display:flex;
+            justify-content:space-around;
+            background:#020617;
+            padding:15px;
+        }
+
+        .nav button{
+            background:none;
+            border:none;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        /* MODAL */
+        .modal{
+            display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.8);
+            justify-content:center;
+            align-items:center;
+        }
+
+        .modal-content{
+            background:#1e293b;
+            padding:25px;
+            width:90%;
+            max-width:350px;
+            border-radius:20px;
+        }
+
+        .modal-content h2{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .modal-content input{
+            width:100%;
+            padding:15px;
+            margin-bottom:15px;
+            border:none;
+            border-radius:10px;
+            font-size:16px;
+        }
+
+        .save-btn{
+            width:100%;
+            padding:15px;
+            background:#22c55e;
+            color:white;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            margin-bottom:10px;
+        }
+
+        .close-btn{
+            width:100%;
+            padding:15px;
+            background:#ef4444;
+            color:white;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HOME SCREEN -->
+    <div id="home" class="screen active home">
+        <h1>Emergency Help</h1>
+
+        <button class="sos-btn" onclick="sendSOS()">
+            SOS
+        </button>
+
+        <p class="subtitle">
+            Bonyeza kupata msaada wa haraka
+        </p>
+    </div>
+
+<!-- Badilisha sehemu yote ya Emergency Contacts kwa hii -->
+
+<div id="contactList">
+
+    <div class="contact">
+        <span>👩 Mama</span>
+        <a href="tel:+255619862221" class="call-btn">Call</a>
+    </div>
+
+    <div class="contact">
+        <span>👨 Rafiki</span>
+        <a href="tel:+255619895822" class="call-btn">Call</a>
+    </div>
+
+    <div class="contact">
+        <span>🚔 Police</span>
+        <a href="tel:112" class="call-btn">Call</a>
+    </div>
+
+</div>
+
+        </div>
+
+        <button class="add-btn" onclick="openModal()">
+            + Ongeza Namba
+        </button>
+    </div>
+
+    <!-- MAP SCREEN -->
+    <div id="map" class="screen">
+        <h1>Live Location</h1>
+
+        <div class="map-box">
+            <iframe
+                src="https://maps.google.com/maps?q=Dar%20es%20Salaam&t=&z=13&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav">
+        <button onclick="showScreen('home')">🏠 Home</button>
+        <button onclick="showScreen('contacts')">📞 Contacts</button>
+        <button onclick="showScreen('map')">📍 Map</button>
+    </div>
+</div>
+
+<!-- ADD CONTACT MODAL -->
+<div id="contactModal" class="modal">
+    <div class="modal-content">
+        <h2>Ongeza Contact</h2>
+
+        <input type="text" id="contactName" placeholder="Jina la Contact">
+        <input type="tel" id="contactPhone" placeholder="Namba ya Simu">
+
+        <button class="save-btn" onclick="addContact()">
+            Hifadhi
+        </button>
+
+        <button class="close-btn" onclick="closeModal()">
+            Funga
+        </button>
+    </div>
+</div>
+
+<script>
+    function showScreen(screenId){
+        document.querySelectorAll('.screen').forEach(screen=>{
+            screen.classList.remove('active');
+        });
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function sendSOS(){
+        alert(
+            "🚨 SOS Alert Sent!\n\n" +
+            "Location yako imetumwa kwa:\n" +
+            "- Mama\n" +
+            "- Rafiki\n" +
+            "- Police"
+        );
+    }
+
+    function openModal(){
+        document.getElementById('contactModal').style.display='flex';
+    }
+
+    function closeModal(){
+        document.getElementById('contactModal').style.display='none';
+    }
+
+    function addContact(){
+        const name = document.getElementById('contactName').value.trim();
+        const phone = document.getElementById('contactPhone').value.trim();
+
+        if(name === "" || phone === ""){
+            alert("Tafadhali jaza taarifa zote.");
+            return;
+        }
+
+        const contact = document.createElement('div');
+        contact.className = 'contact';
+
+        contact.innerHTML = `
+            <span>📱 ${name}</span>
+            <button class="call-btn"
+                onclick="window.location.href='tel:${phone}'">
+                Call
+            </button>
+        `;
+
+        document.getElementById('contactList').appendChild(contact);
+
+        document.getElementById('contactName').value = '';
+        document.getElementById('contactPhone').value = '';
+
+        closeModal();
+
+        alert("Contact imeongezwa kikamilifu!");
+    }
+
+    window.onclick = function(event){
+        const modal = document.getElementById('contactModal');
+        if(event.target === modal){
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>
